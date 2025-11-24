@@ -18,12 +18,6 @@ class DASFile:
         self._file.close()
         self._file = None
 
-    def get_timestamp(self) -> datetime.datetime:
-        date = os.path.basename(os.path.dirname(self.filepath))
-        time = os.path.splitext(os.path.basename(self.filepath))[0]
-        timestamp_str = date + time
-        return datetime.datetime.strptime(timestamp_str, "%Y%m%d%H%M%S")
-
     @property
     def filepath(self):
         return self._filepath
@@ -48,3 +42,9 @@ class DASFile:
         metadata["scale"] = (2 * math.pi) / 2 ** 16 * (1550.12 * 1e-9) / (
                 0.78 * 4 * math.pi * metadata["n"] * metadata["GL"])
         return metadata
+
+    def get_timestamp(self) -> datetime.datetime:
+        date = os.path.basename(os.path.dirname(self.filepath))
+        time = os.path.splitext(os.path.basename(self.filepath))[0]
+        timestamp_str = date + time
+        return datetime.datetime.strptime(timestamp_str, "%Y%m%d%H%M%S")

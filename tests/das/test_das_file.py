@@ -1,5 +1,4 @@
 import datetime
-import glob
 import os
 import unittest
 from pathlib import Path
@@ -14,12 +13,12 @@ class TestLoad(unittest.TestCase):
 
     def test_init(self):
         das_file = DASFile(self.SINGLE)
-        self.assertEqual(das_file.filepath,self.SINGLE)
+        self.assertEqual(das_file.filepath, self.SINGLE)
 
     def test_timestamp(self):
         das_file = DASFile(self.SINGLE)
         ts = das_file.get_timestamp()
-        self.assertEqual(ts,datetime.datetime(2025,2,24,18,12,27))
+        self.assertEqual(ts, datetime.datetime(2025, 2, 24, 18, 12, 27))
 
     def test_read_data_fails_no_enter(self):
         err = None
@@ -39,4 +38,3 @@ class TestLoad(unittest.TestCase):
         except RuntimeError as e:
             err = e
         self.assertIsNone(err)
-
