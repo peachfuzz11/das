@@ -17,8 +17,11 @@ class TestLoad(unittest.TestCase):
 
     def test_timestamp(self):
         das_file = DASFile(self.SINGLE)
-        ts = das_file.get_timestamp()
-        self.assertEqual(ts, datetime.datetime(2025, 2, 24, 18, 12, 27))
+        with das_file as f:
+            meta = f.get_metadata()
+        ts = meta["timestamp"]
+        self.assertEqual(ts.replace(microsecond=0),
+                         datetime.datetime(2025, 2, 24, 18, 12, 27, tzinfo=datetime.timezone.utc))
 
     def test_read_data_fails_no_enter(self):
         err = None

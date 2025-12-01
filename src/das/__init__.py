@@ -22,14 +22,15 @@ def read_files(files: typing.List[str]) -> xarray.Dataset:
     def prepare_file(ds):
         filename = ds.encoding["source"]
         dasfile = DASFile(filename)
-        timestamp = dasfile.get_timestamp()
+        with dasfile as f:
+            timestamp = f.get_metadata()["timestamp"]
 
         time_values = [timestamp + datetime.timedelta(seconds=i * metadata["dt"]) for i in
                        range(ds.sizes["phony_dim_0"])]
         ds["time"] = (("phony_dim_0",), time_values)
-        ds["distance"] = (("phony_dim_1",), metadata["x"])
-        ds = ds.rename({"phony_dim_1": "distance", "phony_dim_0": "time"})
-        ds = ds.set_coords(["time", "distance"])
+        ds["x"] = (("phony_dim_1",), metadata["x"])
+        ds = ds.rename({"phony_dim_1": "x", "phony_dim_0": "time"})
+        ds = ds.set_coords(["time", "x"])
         ds = ds.drop_vars(["fileGenerator", "fileGeneratorSvnRev", "fileVersion", "numberOfAuxData"])
         return ds
 
