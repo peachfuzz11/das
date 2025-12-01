@@ -1,6 +1,6 @@
 [project]
 name = "das"
-version = "0.1.1"
+version = "0.1.2"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -10,4 +10,4 @@ dependencies = [
     "xarray>=2025.11.0",
 ]
 [tool.setuptools.package-data]
-das = ["/cables/resources/*.json"]
+das = ["cables/resources/*.json"]
