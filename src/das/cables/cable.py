@@ -32,7 +32,7 @@ class Cable(abc.ABC):
         return ds
 
     def _add_cable_info(self, ds: xarray.Dataset) -> xarray.Dataset:
-        lat, lon = zip(*self.geojson["geometry"]["coordinates"])
+        lon, lat = zip(*self.geojson["geometry"]["coordinates"])
         depth = self.geojson["properties"]["depths"]
         n = ds.sizes["x"]
         lat, lon, depth = map(lambda v: numpy.interp(numpy.linspace(0, len(lat), n), numpy.arange(len(lat)), v),
